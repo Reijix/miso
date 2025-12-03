@@ -12,8 +12,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-     - uses: nixbuild/nix-quick-install-action@v34
      - uses: actions/checkout@v3.5.3
+     - uses: wimpysworld/nothing-but-nix@main
+       with: 
+         nix-permission-edict: true
+     - uses: nixbuild/nix-quick-install-action@v34
      - name: Cancel Previous Runs
        uses: styfle/cancel-workflow-action@0.9.1
        with:
@@ -41,8 +44,14 @@ jobs:
      - name: (JS) Miso GHCJS (GHCJS 8.6)
        run: nix-build -A miso-ghcjs
 
+     - name: Nix garbage collection
+       run: nix-collect-garbage -d
+
      - name: (JS) Miso GHCJS Production (GHCJS 8.6)
        run: nix-build -A miso-ghcjs-prod
+
+     - name: Nix garbage collection
+       run: nix-collect-garbage -d
 
      - name: (x86) Miso GHC (GHC 8.6.5)
        run: nix-build -A miso-ghc
@@ -52,6 +61,9 @@ jobs:
 
      - name: (JS) Miso GHCJS (GHC 9.12.2)
        run: nix-build -A miso-ghcjs-9122
+
+     - name: Nix garbage collection
+       run: nix-collect-garbage -d
 
      - name: (x86) Miso GHC (GHC 9.12.2)
        run: nix-build -A miso-ghc-9122
