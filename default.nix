@@ -68,7 +68,8 @@ with pkgs.haskell.lib;
     #!${pkgs.stdenv.shell}
     export PLAYWRIGHT_BROWSERS_PATH=${pkgs.playwright-driver.browsers}
     export PATH="${pkgs.lib.makeBinPath [ pkgs.http-server pkgs.bun ]}:$PATH"
-    bun install playwright@1.53
+    # bun install playwright@1.53
+    bunx playwright@1.53 install
     http-server ${pkgs.pkgsCross.ghcjs.haskell.packages.ghc9122.miso-tests}/bin/component-tests.jsexe &
     cd tests
     bun run ../ts/playwright.ts
